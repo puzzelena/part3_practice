@@ -1,0 +1,27 @@
+{
+  "name": "part3_practice3.1-3.6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "\"echo \\\"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/puzzelena/part3_practice.git"
+  },
+  "author": "Puzic Elena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/puzzelena/part3_practice/issues"
+  },
+  "homepage": "https://github.com/puzzelena/part3_practice#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.10"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
