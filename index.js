@@ -26,16 +26,20 @@ let persons = [
     }
 ]
 
-app.get('/api/persons', (req, res) => {
-    res.json(persons)
+app.get('/info', (request, response) => {
+    const date = new Date();
+    response.send(`<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`);
+});
+
+app.get('/api/persons', (request, response) => {
+    response.json(persons)
   })
 
 app.get('/api/persons/:id', (request, response) => { // will handle all HTTP GET requests, that are of the form /api/persons/SOMETHING, where SOMETHING is an arbitrary string
     const id = Number(request.params.id) // The id parameter in the route of a request, can be accessed through the request object
-    console.log(id)
+    let sumID = 0;
     const person = persons.find(person => {
     person.id === id // find method of arrays is used to find the note with an id that matches the parameter.
-
     if (person) {
         response.json(person)
       } else {
