@@ -54,11 +54,14 @@ app.get('/api/persons', (request, response) => {
   })
 
   const generateId = () => {
-    const maxId = persons.length > 0
-      ? Math.max(...persons.map(person => person.id)) // creates a new array that contains all the ids of the notes
-      : 0
-    return maxId + 1
-  }
+    let id = Math.floor(Math.random() * 1001);
+    const usedIds = persons.map(person => person.id);
+
+    while (usedIds.find(usedId => usedId === id)) {
+        id = Math.floor(Math.random() * 1001);
+    }
+    return id;
+}
   
   app.post('/api/persons', (request, response) => {
     const body = request.body
