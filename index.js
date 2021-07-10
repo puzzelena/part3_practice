@@ -1,5 +1,7 @@
 const express = require('express') // importing express function
+const morgan = require('morgan');
 const app = express() // that is used to create an express application stored in the app variable
+
 
 app.use(express.json()) // access the data
 
@@ -25,6 +27,23 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+morgan.token('data',(request, response) => {
+    return request.method === 'POST'
+        ? JSON.stringify(request.body)
+        : null;
+});
+
+app.use(morgan((tokens, request, response) => {
+    return [
+        tokens.method(request, response),
+        tokens.url(request, response),
+        tokens.status(request, response),
+        tokens.res(request, response, 'content-length'), '-',
+        tokens['response-time'](request, response), 'ms',
+        tokens.data(request, response)
+    ].join(' ')
+}));
 
 app.get('/info', (request, response) => {
     const date = new Date();
