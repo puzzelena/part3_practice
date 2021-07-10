@@ -63,26 +63,27 @@ app.get('/api/persons', (request, response) => {
     return id;
 }
   
-  app.post('/api/persons', (request, response) => {
-    const body = request.body
-  
-    if (!body.content) {
-      return response.status(400).json({  // If the received data is missing a value for the content property, the server will respond to the request with the status code 400 bad request
-        error: 'content missing'  // However, notes.map(n => n.id) is an array so it can't directly be given as a parameter to Math.max. The array can be transformed into individual numbers by using the "three dot" spread syntax ....
-      })
+app.post('/api/persons', (request, response) => {
+    if (!request.body.name || !request.body.number) {
+        return response.status(404).json({
+            error: 'The name or number is missing'
+        });
     }
-  
+    else if (persons.find(person => person.name.toLowerCase() === request.body.name.toLowerCase())) {
+        return response.status(404).json({
+            error: 'name must be unique'
+        });
+    }
     const person = {
-      content: body.content,
-      important: body.important || false, // If the important property is missing, we will default the value to false
-      date: new Date(),
-      id: generateId(),
+        name: request.body.name,
+        number: request.body.number,
+        id: generateId()
     }
-  
-    persons = persons.concat(person)
-  
-    response.json(person)
-  })
+
+    persons = persons.concat(person);
+    response.json(person);
+});
+
 
   const PORT = 3001
   app.listen(PORT)
