@@ -35,18 +35,16 @@ app.get('/api/persons', (request, response) => {
     response.json(persons)
   })
 
-app.get('/api/persons/:id', (request, response) => { // will handle all HTTP GET requests, that are of the form /api/persons/SOMETHING, where SOMETHING is an arbitrary string
-    const id = Number(request.params.id) // The id parameter in the route of a request, can be accessed through the request object
-    let sumID = 0;
-    const person = persons.find(person => {
-    person.id === id // find method of arrays is used to find the note with an id that matches the parameter.
+  app.get('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id);
+    const person = persons.find(person => person.id === id);
+
     if (person) {
-        response.json(person)
-      } else {
-        response.status(404).end() // Since no data is attached to the response, we use the status method for setting the status, 
-      } // The note is then returned to the sender of the request
-  })
-  })
+        response.json(person);
+    } else {
+        response.status(404).end();
+    }
+});
 
   app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -56,8 +54,8 @@ app.get('/api/persons/:id', (request, response) => { // will handle all HTTP GET
   })
 
   const generateId = () => {
-    const maxId = notes.length > 0
-      ? Math.max(...notes.map(n => n.id)) // creates a new array that contains all the ids of the notes
+    const maxId = persons.length > 0
+      ? Math.max(...persons.map(person => person.id)) // creates a new array that contains all the ids of the notes
       : 0
     return maxId + 1
   }
